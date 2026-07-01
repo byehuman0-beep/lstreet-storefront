@@ -1,0 +1,205 @@
+{% layout none %}
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title }}</title>
+  
+  <style>
+    /* Global Canvas Reset */
+    html, body { margin: 0; padding: 0; background-color: #fcfcfc; color: #111; -webkit-font-smoothing: antialiased; }
+    
+    .ls-homepage-root {
+      display: flex;
+      flex-direction: row;
+      min-height: 100vh;
+      width: 100%;
+      box-sizing: border-box;
+      background-color: #fcfcfc;
+    }
+
+    /* Fixed Left Sidebar (Desktop View) */
+    .ls-sidebar {
+      width: 260px; 
+      padding: 50px 40px; 
+      display: flex; 
+      flex-direction: column;
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      height: 100vh; 
+      box-sizing: border-box; 
+      z-index: 100;
+      font-family: Arial, sans-serif; 
+      letter-spacing: 0.09em; 
+      font-size: 11px;
+    }
+    .ls-logo-area { margin-bottom: 50px; }
+    .ls-logo { width: 110px; height: auto; display: block; }
+    
+    .ls-menu { list-style: none; padding: 0; margin: 0; }
+    .ls-menu > li { margin-bottom: 22px; }
+    .ls-menu a { text-decoration: none; color: #111; font-weight: normal; text-transform: uppercase; }
+    .ls-menu a:hover { color: #555; }
+    
+    .ls-sidebar-footer-links { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
+    .ls-sidebar-footer-links a { text-decoration: none; color: #777; font-size: 10px; text-transform: uppercase; }
+    .ls-sidebar-footer-links a:hover { color: #111; }
+    .ls-nav-mobile-bar { display: none; }
+
+    /* Right Editorial Viewport Panel */
+    .ls-main-content {
+      margin-left: 260px; 
+      flex: 1;
+      display: flex; 
+      flex-direction: column;
+      padding: 35px 35px 50px 0px; 
+      box-sizing: border-box; 
+      font-family: Arial, sans-serif;
+    }
+    .ls-hero-wrapper { width: 100%; }
+    .ls-hero-img { width: 100%; height: auto; display: block; object-fit: cover; }
+    
+    /* Ultra-Minimalist Bottom Email Field */
+    .ls-bottom-newsletter {
+      padding-top: 40px;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+    }
+    .ls-newsletter-form { 
+      position: relative; 
+      border-bottom: 1px solid #111; 
+      padding-bottom: 6px; 
+      width: 100%; 
+      max-width: 480px; 
+    }
+    .ls-newsletter-form input { 
+      border: none; 
+      background: transparent; 
+      width: 90%; 
+      font-size: 11px; 
+      letter-spacing: 0.1em;
+      outline: none; 
+      color: #111;
+      text-transform: uppercase;
+    }
+    .ls-newsletter-form button { 
+      background: none; 
+      border: none; 
+      font-size: 16px; 
+      cursor: pointer; 
+      position: absolute; 
+      right: 0; 
+      bottom: 4px; 
+      color: #111;
+    }
+
+    /* Tablet and Mobile Breakpoints */
+    @media (max-width: 900px) {
+      .ls-homepage-root { flex-direction: column; }
+      .ls-sidebar {
+        position: relative; width: 100%; height: auto;
+        flex-direction: row; justify-content: space-between; align-items: center; padding: 25px 20px;
+      }
+      .ls-logo-area { margin-bottom: 0; }
+      .ls-logo { width: 90px; }
+      .ls-nav-desktop { display: none; }
+      
+      .ls-nav-mobile-bar { display: flex; gap: 20px; font-weight: normal; font-size: 11px; letter-spacing: 0.08em; }
+      .ls-mob-link { text-decoration: none; color: #111; }
+      
+      .ls-main-content { margin-left: 0; padding: 0 20px 40px 20px; }
+      .ls-bottom-newsletter { padding-top: 30px; }
+      .ls-newsletter-form { max-width: 100%; }
+      
+      /* Mobile Overlay Fullscreen Menu */
+      .ls-mobile-overlay {
+        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+        background: #fcfcfc; z-index: 9999; display: none; flex-direction: column;
+        justify-content: center; align-items: center;
+      }
+      .ls-mobile-menu-list { list-style: none; text-align: center; padding: 0; }
+      .ls-mobile-menu-list li { margin: 25px 0; font-size: 14px; letter-spacing: 0.12em; }
+      .ls-mobile-menu-list a { text-decoration: none; color: #111; text-transform: uppercase; }
+      .ls-close-menu { position: absolute; top: 25px; right: 20px; font-size: 28px; cursor: pointer; color: #111; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ls-homepage-root">
+    
+    <!-- HEADER & SIDEBAR NAVIGATION -->
+    <header class="ls-sidebar">
+      <div class="ls-logo-area">
+        <!-- RENDER THE LOGO FILE FROM SHOPIFY CHANNELS -->
+        <img src="https://cdn.shopify.com/s/files/1/0000/0000/files/your_new_oval_logo.png" alt="LS Logo" class="ls-logo">
+      </div>
+      
+      <nav class="ls-nav-desktop">
+        <ul class="ls-menu">
+          <li><a href="/collections/essentials">ESSENTIALS</a></li>
+          <li><a href="/collections/survive-the-system">SURVIVE THE SYSTEM</a></li>
+          <li><a href="/pages/world">WORLD</a></li>
+          <li><a href="/pages/social">SOCIAL</a></li>
+          <li><a href="/pages/about">ABOUT</a></li>
+          <li><a href="/search">SEARCH</a></li>
+          <li><a href="/cart">BAG ({{ cart.item_count }})</a></li>
+        </ul>
+        
+        <div class="ls-sidebar-footer-links">
+          <a href="/account/login">LOGIN</a>
+          <a href="/pages/terms">TERMS & CONDITIONS</a>
+          <a href="/pages/shipping">SHIPPING & RETURNS</a>
+          <a href="/pages/privacy">PRIVACY POLICY</a>
+        </div>
+      </nav>
+
+      <!-- MOBILE TOP NAV LINKS -->
+      <div class="ls-nav-mobile-bar">
+        <a href="/search" class="ls-mob-link">SEARCH</a>
+        <a href="/cart" class="ls-mob-link">BAG</a>
+        <a href="#" class="ls-mob-link" onclick="toggleMobileMenu(event)">MENU</a>
+      </div>
+    </header>
+
+    <!-- MOBILE OVERLAY POPUP -->
+    <div id="lsMobileMenu" class="ls-mobile-overlay">
+      <span class="ls-close-menu" onclick="toggleMobileMenu(event)">&times;</span>
+      <ul class="ls-mobile-menu-list">
+        <li><a href="/collections/essentials" onclick="toggleMobileMenu(event)">ESSENTIALS</a></li>
+        <li><a href="/collections/survive-the-system" onclick="toggleMobileMenu(event)">SURVIVE THE SYSTEM</a></li>
+        <li><a href="/pages/world" onclick="toggleMobileMenu(event)">WORLD</a></li>
+        <li><a href="/pages/social" onclick="toggleMobileMenu(event)">SOCIAL</a></li>
+        <li><a href="/pages/about" onclick="toggleMobileMenu(event)">ABOUT</a></li>
+      </ul>
+    </div>
+
+    <!-- MAIN EDITORIAL CONTENT VIEWPORT -->
+    <main class="ls-main-content">
+      <div class="ls-hero-wrapper">
+        <!-- RENDER LOOKBOOK ARTWORK FROM SHOPIFY FILES -->
+        <img src="https://cdn.shopify.com/s/files/1/0000/0000/files/hero_image.jpg" alt="LS Streetwear" class="ls-hero-img">
+      </div>
+      
+      <footer class="ls-bottom-newsletter">
+        {% form 'customer', class: 'ls-newsletter-form' %}
+          <input type="email" name="contact[email]" placeholder="E-MAIL *" required>
+          <button type="submit">→</button>
+        {% endform %}
+      </footer>
+    </main>
+
+  </div>
+
+  <script>
+    function toggleMobileMenu(e) {
+      if(e) e.preventDefault();
+      var menu = document.getElementById("lsMobileMenu");
+      menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+    }
+  </script>
+</body>
+</html>
